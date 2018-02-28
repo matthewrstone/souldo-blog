@@ -1,0 +1,31 @@
+---
+layout: post
+title: How to Generate a Puppet Certificate with DNS Alt Names
+date: 2015-09-23 17:17:35.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+tags:
+  - tech
+categories:
+- Puppet
+tags: []
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '18678363943'
+author:
+  login: souldonut
+  email: matt@souldo.net
+  display_name: matt
+  first_name: Matthew
+  last_name: Stone
+---
+<p>(for use with creating additional compilers)</p>
+<p>If you aren’t using the curl method, use the puppet certificate generation method <em>(note: make sure the ssl dir is clean)</em>:</p>
+<blockquote><p>puppet certificate generate &lt;fqdn&gt; –ca-location remote –dns-alt-names &lt;comma separated dns alt name list&gt;</p></blockquote>
+<p>Then approve through the same methods on the master</p>
+<blockquote><p>puppet cert sign &lt;fqdn&gt; –allow-dns-alt-names</p></blockquote>
+<div class="sharedaddy sd-sharing-enabled"></div>

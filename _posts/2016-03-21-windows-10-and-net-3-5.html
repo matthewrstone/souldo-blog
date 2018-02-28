@@ -1,0 +1,31 @@
+---
+layout: post
+title: Windows 10 and .NET 3.5
+date: 2016-03-21 20:21:09.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Windows
+tags:
+- dotnet
+- tech
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '20988941226'
+author:
+  login: souldonut
+  email: matt@souldo.net
+  display_name: matt
+  first_name: Matthew
+  last_name: Stone
+---
+<p>Call this group policy fail #436.</p>
+<p>&nbsp;</p>
+<p>I have Windows 10 Enterprise.  I need to install a vSphere client that requires .NET 3.5, which is a 'feature' in Win10 instead of an installable item. Trying to add the feature I get hit with an error that Windows Update failed to download the update I need to enable .NET 3.5.</p>
+<p>ISO to the rescue.  Mount the ISO, then dism the sucker:</p>
+<blockquote><p>dism /online /enable-feature /featurename:NetFX3 /all /source:d:\sources\sxs /limitaccess</p></blockquote>
+<p>Now back to getting actual work accomplished...</p>

@@ -1,0 +1,105 @@
+---
+layout: post
+title: Windows, Powershell and Puppet Structured Facts (Slight Return)
+date: 2015-11-06 17:25:20.000000000 -08:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Powershell
+- Puppet
+- Windows
+tags:
+- ruby
+- tech
+meta:
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  _publicize_job_id: '18678576935'
+author:
+  login: souldonut
+  email: matt@souldo.net
+  display_name: matt
+  first_name: Matthew
+  last_name: Stone
+---
+<p>At the end of part one, I built a custom Puppet structured fact to relate the Powershell and .NET version information from a Powershell Object to a Ruby Hash that was readable by Facter. The end result was, well, a pile of info.</p>
+<pre><code>PS C:\Users\vagrant&gt; facter -p psversiontable
+{"psversion"=&gt;{"major"=&gt;4, "minor"=&gt;0, "build"=&gt;-1, "revision"=&gt;-1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}, "wsmansta
+ckversion"=&gt;{"major"=&gt;3, "minor"=&gt;0, "build"=&gt;-1, "revision"=&gt;-1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}, "serializat
+ionversion"=&gt;{"major"=&gt;1, "minor"=&gt;1, "build"=&gt;0, "revision"=&gt;1, "majorrevision"=&gt;0, "minorrevision"=&gt;1}, "clrversion"=&gt;
+{"major"=&gt;4, "minor"=&gt;0, "build"=&gt;30319, "revision"=&gt;34209, "majorrevision"=&gt;0, "minorrevision"=&gt;-31327}, "buildversion"
+=&gt;{"major"=&gt;6, "minor"=&gt;3, "build"=&gt;9600, "revision"=&gt;17400, "majorrevision"=&gt;0, "minorrevision"=&gt;17400}, "pscompatiblev
+ersions"=&gt;[{"major"=&gt;1, "minor"=&gt;0, "build"=&gt;-1, "revision"=&gt;-1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}, {"major"=&gt;2,
+ "minor"=&gt;0, "build"=&gt;-1, "revision"=&gt;-1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}, {"major"=&gt;3, "minor"=&gt;0, "build"=&gt;-
+1, "revision"=&gt;-1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}, {"major"=&gt;4, "minor"=&gt;0, "build"=&gt;-1, "revision"=&gt;-1, "maj
+orrevision"=&gt;-1, "minorrevision"=&gt;-1}], "psremotingprotocolversion"=&gt;{"major"=&gt;2, "minor"=&gt;2, "build"=&gt;-1, "revision"=&gt;-
+1, "majorrevision"=&gt;-1, "minorrevision"=&gt;-1}}
+</code></pre>
+<p>In this post, I will create a couple of additional facts to crunch the above into something a bit more…legible.</p>
+<p>PowerShell Version</p>
+<p>On the first line of output above, you can see ‘psversion’ contains a hash with the major, minor, build and revision info for PowerShell. Since PowerShell (and the underlying Windows Management Framework) tend to stick to major releases, I’ll create a fact for PowerShell version using the major and minor numbers from the hash above.</p>
+<p>Facter: powershell</p>
+<pre><code>Facter.add(:powershell) do
+  confine :kernel =&gt; :windows
+  setcode do
+    ps = Facter.value(:psversiontable)
+    ps_major = ps['psversion']['major']
+    ps_minor = ps['psversion']['minor']
+    if ps_major
+      "#{ps_major}.#{ps_minor}"
+    else  
+      "unavailable"
+    end
+  end
+end
+</code></pre>
+<p>In the above example, I’ve:<br />
+1. Created a new fact called ‘powershell’.<br />
+2. Confined it to Windows hosts<br />
+3. In the code block, instead of more powershell, I’m taking the hash that we already have in ‘psversion’ and extracting the numbers I need. In this case, I’m grabbing the major and minor values from the ‘psversion’ nested hash, then pushing them together into a string that resembles a version number. On a Windows 2012 server it should return ‘4.0’ by default.<br />
+4. I have it verify that at least <em>something</em> came back for the version info otherwise report the fact as ‘unavailable’.</p>
+<p>Fairly simple, yes? You can do the same for the .NET framework, but there’s a bit of math involved. The .NET framework is hiding in the psversiontable hash under the CLRVersion.</p>
+<pre><code>"clrversion"=&gt;{"major"=&gt;4, "minor"=&gt;0, "build"=&gt;30319, "revision"=&gt;34209, "majorrevision"=&gt;0, "minorrevision"=&gt;-31327}
+</code></pre>
+<p>This is where your patience can be tested very quickly. I tend to want the version of the .NET framework that corresponds to the available version numbers, for example .NET 2, 3.5, 4, 4.5, 4.5.1, 4.5.2, etc… but you need to decipher what version that is based on the info in this hash. I ended up using a case statement to return a useable string like this:</p>
+<pre><code>Facter.add("dotnet") do
+  confine :kernel =&gt; :windows
+  setcode do
+    clr = Facter.value(:psversiontable)
+    if !clr
+      "unavailable"
+    else
+      major = clr['clrversion']['major']
+      revision = clr['clrversion']['revision']
+      case major
+        when 4
+          case revision
+            when 1, 269, 276, 296, 544, 1008, 1022, 1026, 2034
+              "4.0"
+            when 17626, 17929, 18010, 18052, 18063
+              "4.5"
+            when 18408, 18444, 34014
+              "4.5.1"
+            when 34209, 90210
+              "4.5.2"
+          else
+            "unavailable"
+          end
+        when major == 2
+          "legacy"
+        else
+          "unavailable"
+      end
+    end
+  end
+end
+</code></pre>
+<p>With the above two facts working off of the psversiontable fact, you should end up with some very usable results:</p>
+<pre><code>PS&gt; facter -p powershell
+powershell =&gt; 4.0
+
+PS&gt; facter -p dotnet
+dotnet =&gt; 4.5</code></pre>

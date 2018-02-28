@@ -1,0 +1,35 @@
+---
+layout: post
+title: Hyper-V and the Virtual Floppy
+date: 2015-08-21 17:13:04.000000000 -07:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Powershell
+- Windows
+tags:
+- hyper-v
+- tech
+meta:
+  _edit_last: '1730403'
+  geo_public: '0'
+  _publicize_job_id: '18678240273'
+author:
+  login: souldonut
+  email: matt@souldo.net
+  display_name: matt
+  first_name: Matthew
+  last_name: Stone
+---
+<p>I’ve been working on automating builds in Hyper-V using Powershell and given that for some reason every OS seems to need either a PXE setup or a floppy disk to auto-provision, I took the road that took fewer additional servers/services.</p>
+<p>To create virtual floppy disk, perfect for kickstart and unattend.xml files for your operating system of choice, the first part is easy:</p>
+<blockquote><p>New-VFD -Path “C:\mystuff\floppy.vfd”</p></blockquote>
+<p>You should now see a working VFD….HOWEVER, without additional tools you can’t mount and work with that VFD.  It’s a bit chicken before the eggy but you need to mount that VFD into a VM to manage it.  I ended up with a ‘control’ VM for these purposes, mounting the VFD and writing my files on the guest VM.  To attach the VFD to the guest VM:</p>
+<blockquote><p>Set-VMFloppyDiskDrive -VMName $vmName -Path $vfdpath</p></blockquote>
+<p><em>(where vmName is your VM and vfdPath is the path to the vfd file…I would hope that part was self explanatory).</em></p>
+<p>Now comes the fun part.  You’re done with this floppy and need to use it elsewhere, except oh…it’s still mounted.  You search up and down for Dismount-VirtualFloppyDrive or something to that effect and come up incredibly short.  The solution?  Null.</p>
+<blockquote><p>Set-VMFloppyDiskDrive -VMName $vmName -Path $null</p></blockquote>
+<p>There ya go.  A freshly dismounted floppy drive.</p>
