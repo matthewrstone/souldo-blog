@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog</title>
+    <description>a dumping ground for technical musings and other non-associated things.</description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Make Blogging Hard Again</title>
+        <description>
+          
+          Why blog after so long? Well, mostly as a use case for working on various automation tooling and to dig more into containers on Windows. Short version, this blog moved from a hosted WordPress site to a statically built Jekyll site running in a Nano server container on AWS. Long...
+        </description>
+        <pubDate>Sat, 10 Mar 2018 00:00:00 -0700</pubDate>
+        <link>/2018-03-10-make-blogging-hard-again/</link>
+        <guid isPermaLink="true">/2018-03-10-make-blogging-hard-again/</guid>
+      </item>
+    
+      <item>
+        <title>Getting Familiar with Windows Server 2016 Administration</title>
+        <description>
+          
+          Late last year I was asked if I had interest in making a video on the basics of Windows Server 2016 system administration for Packt Publishing. It has been a great experience and I’m happy to say that as of last week the first of two courses has been released!...
+        </description>
+        <pubDate>Mon, 26 Feb 2018 00:00:00 -0700</pubDate>
+        <link>/2018-02-26-getting-familiar-with-windows-server-2016-administration.1/</link>
+        <guid isPermaLink="true">/2018-02-26-getting-familiar-with-windows-server-2016-administration.1/</guid>
+      </item>
+    
+      <item>
+        <title>Windows 10 and .NET 3.5</title>
+        <description>
+          
+          Call this group policy fail #436. &amp;nbsp; I have Windows 10 Enterprise.  I need to install a vSphere client that requires .NET 3.5, which is a 'feature' in Win10 instead of an installable item. Trying to add the feature I get hit with an error that Windows Update failed to...
+        </description>
+        <pubDate>Mon, 21 Mar 2016 20:21:09 -0700</pubDate>
+        <link>/2016-03-21-windows-10-and-net-3-5/</link>
+        <guid isPermaLink="true">/2016-03-21-windows-10-and-net-3-5/</guid>
+      </item>
+    
+      <item>
+        <title>Internet Explorer - Disable First Run</title>
+        <description>
+          
+          I’ve been dealing with building packages in Chocolatey quite a bit lately, and one of the things I’ve run into is trying to get ZIP files to play nice when they need to be retrieved from Invoke-WebRequest.  When provisioning systems from scratch I keep running into an error message: Invoke-WebRequest...
+        </description>
+        <pubDate>Sat, 07 Nov 2015 18:22:10 -0700</pubDate>
+        <link>/2015-11-07-internet-explorer-disable-first-run/</link>
+        <guid isPermaLink="true">/2015-11-07-internet-explorer-disable-first-run/</guid>
+      </item>
+    
+      <item>
+        <title>Windows, Powershell and Puppet Structured Facts (Slight Return)</title>
+        <description>
+          
+          At the end of part one, I built a custom Puppet structured fact to relate the Powershell and .NET version information from a Powershell Object to a Ruby Hash that was readable by Facter. The end result was, well, a pile of info. PS C:\Users\vagrant&amp;gt; facter -p psversiontable {&quot;psversion&quot;=&amp;gt;{&quot;major&quot;=&amp;gt;4, &quot;minor&quot;=&amp;gt;0, &quot;build&quot;=&amp;gt;-1,...
+        </description>
+        <pubDate>Fri, 06 Nov 2015 18:25:20 -0700</pubDate>
+        <link>/2015-11-06-windows-powershell-and-puppet-structured-facts-slight-return/</link>
+        <guid isPermaLink="true">/2015-11-06-windows-powershell-and-puppet-structured-facts-slight-return/</guid>
+      </item>
+    
+      <item>
+        <title>Windows, Powershell and Puppet Structured Facts</title>
+        <description>
+          
+          The Goal: I need to return the versions of PowerShell and the latest .NET framework installed as facts. I’ve done this before and I’ll do this again, but one of the bigger aggravations I have about puppet development on Windows is the reliance on many PowerShell calls to find simple...
+        </description>
+        <pubDate>Thu, 05 Nov 2015 18:23:28 -0700</pubDate>
+        <link>/2015-11-05-windows-powershell-and-puppet-structured-facts/</link>
+        <guid isPermaLink="true">/2015-11-05-windows-powershell-and-puppet-structured-facts/</guid>
+      </item>
+    
+      <item>
+        <title>How to Generate a Puppet Certificate with DNS Alt Names</title>
+        <description>
+          
+          (for use with creating additional compilers) If you aren’t using the curl method, use the puppet certificate generation method (note: make sure the ssl dir is clean): puppet certificate generate &amp;lt;fqdn&amp;gt; –ca-location remote –dns-alt-names &amp;lt;comma separated dns alt name list&amp;gt; Then approve through the same methods on the master puppet cert...
+        </description>
+        <pubDate>Wed, 23 Sep 2015 17:17:35 -0700</pubDate>
+        <link>/2015-09-23-how-to-generate-a-puppet-certificate-with-dns-alt-names/</link>
+        <guid isPermaLink="true">/2015-09-23-how-to-generate-a-puppet-certificate-with-dns-alt-names/</guid>
+      </item>
+    
+      <item>
+        <title>Hyper-V and the Virtual Floppy</title>
+        <description>
+          
+          I’ve been working on automating builds in Hyper-V using Powershell and given that for some reason every OS seems to need either a PXE setup or a floppy disk to auto-provision, I took the road that took fewer additional servers/services. To create virtual floppy disk, perfect for kickstart and unattend.xml...
+        </description>
+        <pubDate>Fri, 21 Aug 2015 17:13:04 -0700</pubDate>
+        <link>/2015-08-21-hyper-v-and-the-virtual-floppy/</link>
+        <guid isPermaLink="true">/2015-08-21-hyper-v-and-the-virtual-floppy/</guid>
+      </item>
+    
+  </channel>
+</rss>
