@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Make Blogging Hard Again</title>
+  <title>Convoluted Blogging - Part One</title>
 
   <meta name="author" content="Matt Stone" />
 
@@ -52,19 +52,19 @@
   
 
   
-  <meta property="og:title" content="Make Blogging Hard Again" />
+  <meta property="og:title" content="Convoluted Blogging - Part One" />
   
 
    
-  <meta property="og:description" content="Why blog after so long? Well, mostly as a use case for working on various automation tooling and to dig more into containers on Windows. Short version, this blog moved from a hosted WordPress site to a statically built Jekyll site running in a Nano server container on AWS. Long...">
+  <meta property="og:description" content="So as mentioned in a previous post, I’ve been spending a lot of time lately trying to vet different cloud technologies for hosting a simple web app, and I’ve opted to use this blog as the guinea pig. It’s been quite the journey thus far as I’ve intentionally made this...">
   
 
 
   <meta property="og:type" content="website" />
 
   
-  <meta property="og:url" content="/2018-03-10-make-blogging-hard-again/" />
-  <link rel="canonical" href="/2018-03-10-make-blogging-hard-again/" />
+  <meta property="og:url" content="/2018-03-20-convoluted-blogging-part-one/" />
+  <link rel="canonical" href="/2018-03-20-convoluted-blogging-part-one/" />
   
 
   
@@ -78,11 +78,11 @@
   <meta name="twitter:creator" content="@" />
 
   
-  <meta name="twitter:title" content="Make Blogging Hard Again" />
+  <meta name="twitter:title" content="Convoluted Blogging - Part One" />
   
 
   
-  <meta name="twitter:description" content="Why blog after so long? Well, mostly as a use case for working on various automation tooling and to dig more into containers on Windows. Short version, this blog moved from a hosted WordPress site to a statically built Jekyll site running in a Nano server container on AWS. Long...">
+  <meta name="twitter:description" content="So as mentioned in a previous post, I’ve been spending a lot of time lately trying to vet different cloud technologies for hosting a simple web app, and I’ve opted to use this blog as the guinea pig. It’s been quite the journey thus far as I’ve intentionally made this...">
   
 
   
@@ -159,11 +159,11 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="post-heading">
-          <h1>Make Blogging Hard Again</h1>
+          <h1>Convoluted Blogging - Part One</h1>
 		  
 		  
 		  
-		  <span class="post-meta">Posted on March 10, 2018</span>
+		  <span class="post-meta">Posted on March 20, 2018</span>
 		  
         </div>
       </div>
@@ -182,13 +182,23 @@
       
 
       <article role="main" class="blog-post">
-        <p>Why blog after so long? Well, mostly as a use case for working on various automation tooling and to dig more into containers on Windows.</p>
+        <p>So as mentioned in a previous post, I’ve been spending a lot of time lately trying to vet different cloud technologies for hosting a simple web app, and I’ve opted to use this blog as the guinea pig. It’s been quite the journey thus far as I’ve intentionally made this so much more difficult than just paying for a simple Wordpress site and am beginning to question my motives. So, a few notes on the journey thus far.</p>
 
-<p>Short version, this blog moved from a hosted WordPress site to a statically built Jekyll site running in a Nano server container on AWS.</p>
+<h2 id="converting-the-blog-from-wordpress-to-jekyll">Converting the Blog from WordPress to Jekyll</h2>
 
-<p>Long version, that was a bit of a journey and will be detailed throughout later posts.</p>
+<p>For starters, I exported my previous posts out of Wordpress.com and opted to move to Jekyll. If you aren’t familiar with Jekyll, it is a ruby-based app that will generate a static HTML website. I had spent a little time with it before I opted to host on Wordpress.com a few years ago, so decided now was as good a time as any to get my hands dirty with it.</p>
 
-<p>Welcome back, blog.</p>
+<p>Oh and dirty they got. Being ruby based, I had to get my Windows laptop configured to actually work with all the various gems required for Jeykll and the import tool and that took longer than I’d like to admit. I ultimately lost my mind and opted to build the thing in a Docker container running Windows Server Core with all the ruby dependencies. That worked, but then I started thinking about the vast size of a server core install for all of a few HTML pages, so I started looking at <a href="https://docs.microsoft.com/en-us/windows-server/get-started/getting-started-with-nano-server">Nano Server</a>. If you are unfamiliar with Nano Server and have a desire to do any Windows container work, I highly suggest it. It’s much smaller and faster than the other Windows offerings yet comes with a ton of challenges that I’ll have to some day write about. The biggest challenge was how to get Ruby installed and running, as I wanted to run the Jekyll dev server for a bit while I tweaked settings, with the idea that I’d ultimately move it over to IIS (static hosting has it’s advantages). To solve that problem, I found a great link to a Docker multi-stage build on <a href="https://github.com/woodie/nanoserver-ruby">GitHub</a> that led me to success with the <a href="https://github.com/matthewrstone/random-dockerfiles/tree/master/nano-jekyll-dev">Nano container for Jekyll development</a>.</p>
+
+<h2 id="re-launching-the-site">Re-launching the Site</h2>
+
+<p>Once I had everything where I wanted, I spun up the most recent Windows Server Core Containers AMI on Amazon Web Services and was able to run the dev site <em>in production</em>. You should always run development instances in the production. Ah well, risking issues with a blog that hasn’t been updated in a year and change isn’t really a big issue for me, so let’s live large.</p>
+
+<p><em>Side note</em>: if you just want to run Jekyll and not worry about it, you can create a <a href="https://pages.github.com/">GitHub pages</a> site and it will host everything beautifully, but since I was trying to work on workflows in the cloud, I took that option off the table. Besides, given the above tomfoolery, that seemed like giving up.</p>
+
+<p>Now that I actually had a…thing that served pages that resembled a blog, I took a bit of time to find another theme and stuck with <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>. A few more gratuitous edits and a switch to my <a href="https://github.com/matthewrstone/random-dockerfiles/tree/master/nano-iis-blog">IIS container</a> and we were off and running.</p>
+
+<p>The blog was back. Now I just needed to actually add content…and a deployment strategy. Thus began the process of trying to find the best way I could go from a git push to an updated website.</p>
 
       </article>
 
@@ -198,6 +208,14 @@
           
           
             <a href="/tags#tech">tech</a>
+          
+            <a href="/tags#windows server">windows server</a>
+          
+            <a href="/tags#nano server">nano server</a>
+          
+            <a href="/tags#docker">docker</a>
+          
+            <a href="/tags#containers">containers</a>
           
           
         </div>
@@ -214,7 +232,7 @@
 
   
   <!--- Share on Twitter -->
-    <a href="https://twitter.com/intent/tweet?text=Make+Blogging+Hard+Again+/2018-03-10-make-blogging-hard-again/"
+    <a href="https://twitter.com/intent/tweet?text=Convoluted+Blogging+-+Part+One+/2018-03-20-convoluted-blogging-part-one/"
       class="btn btn-social-icon btn-twitter" title="Share on Twitter">
       <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
       <span class="sr-only">Twitter</span>
@@ -223,7 +241,7 @@
 
   
   <!--- Share on Facebook -->
-    <a href="https://www.facebook.com/sharer/sharer.php?u=/2018-03-10-make-blogging-hard-again/"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=/2018-03-20-convoluted-blogging-part-one/"
       class="btn btn-social-icon btn-facebook" title="Share on Facebook">
       <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
       <span class="sr-only">Facebook</span>
@@ -234,7 +252,7 @@
 
   
   <!--- Share on LinkedIn -->
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=/2018-03-10-make-blogging-hard-again/"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=/2018-03-20-convoluted-blogging-part-one/"
       class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
       <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
       <span class="sr-only">LinkedIn</span>
@@ -250,13 +268,9 @@
       <ul class="pager blog-pager">
         
         <li class="previous">
-          <a href="/2018-02-26-getting-familiar-with-windows-server-2016-administration.1/" data-toggle="tooltip" data-placement="top" title="Getting Familiar with Windows Server 2016 Administration">&larr; Previous Post</a>
+          <a href="/2018-03-10-make-blogging-hard-again/" data-toggle="tooltip" data-placement="top" title="Make Blogging Hard Again">&larr; Previous Post</a>
         </li>
         
-        
-        <li class="next">
-          <a href="/2018-03-20-convoluted-blogging-part-one/" data-toggle="tooltip" data-placement="top" title="Convoluted Blogging - Part One">Next Post &rarr;</a>
-        </li>
         
       </ul>
 

@@ -1,0 +1,11 @@
+FROM ubuntu:bionic
+RUN apt-get update -y && apt-get install locales gcc make ruby-dev zlib1g-dev -y
+ADD . /home/ubuntu/blog
+WORKDIR /home/ubuntu/blog
+RUN gem install bundler && bundle install
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENTRYPOINT [ "bundle", "exec", "jekyll", "serve" ]
+
+# docker login -u AWS -p <pwd> -e none https://366423495745.dkr.ecr.us-east-1.amazonaws.com
+366423495745.dkr.ecr.us-east-1.amazonaws.com/souldo_blog:latest

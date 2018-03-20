@@ -5,7 +5,7 @@
 
 host: 0.0.0.0
 port: 80
-title: souldo blog
+title: blog
 
 # Short description of your site
 description: a dumping ground for technical musings and other non-associated things.
@@ -14,12 +14,7 @@ description: a dumping ground for technical musings and other non-associated thi
 
 # List of links in the navigation bar
 navbar-links:
-  About Me: "aboutme"
-  Resources:
-    - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
-    - Learn markdown: "http://www.markdowntutorial.com/"
-    - GitHub Pages: "https://pages.github.com/"
-  Author's home: "http://deanattali.com"
+  Bio & Projects: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
@@ -63,13 +58,12 @@ author:
 # If you want to add a new link that isn't here, you'll need to also edit the file _data/SocialNetworks.yml
 social-network-links:
   rss: true
-  email: "matt@souldo.net"
-  facebook: souldonut
   github: matthewrstone
   twitter: matthewstone
-#  reddit: yourname
-#  google-plus: +DeanAttali
   linkedin: matthewrstone
+
+  #  reddit: yourname
+#  google-plus: +DeanAttali
 #  xing: yourname
 #  stackoverflow: "3943160/daattali"
 #  snapchat: deanat78

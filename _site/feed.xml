@@ -7,6 +7,17 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Convoluted Blogging - Part One</title>
+        <description>
+          
+          So as mentioned in a previous post, I’ve been spending a lot of time lately trying to vet different cloud technologies for hosting a simple web app, and I’ve opted to use this blog as the guinea pig. It’s been quite the journey thus far as I’ve intentionally made this...
+        </description>
+        <pubDate>Tue, 20 Mar 2018 00:00:00 -0700</pubDate>
+        <link>/2018-03-20-convoluted-blogging-part-one/</link>
+        <guid isPermaLink="true">/2018-03-20-convoluted-blogging-part-one/</guid>
+      </item>
+    
+      <item>
         <title>Make Blogging Hard Again</title>
         <description>
           
