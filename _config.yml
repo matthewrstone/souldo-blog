@@ -5,10 +5,10 @@
 
 host: 0.0.0.0
 port: 80
-title: blog
+title: souldo.net
 
 # Short description of your site
-description: a dumping ground for technical musings and other non-associated things.
+description: infrequent musings go here.
 
 # --- Navigation bar options --- #
 
