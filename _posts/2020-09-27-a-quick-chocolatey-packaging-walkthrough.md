@@ -2,10 +2,8 @@
 layout: post
 title: A Quick Chocolatey Packaging Walkthrough
 tags:
-  - puppet
   - windows
   - chocolatey
-  - 0011
 ---
 
 # A Quick Example of Creating a Chocolatey Package
@@ -35,17 +33,17 @@ One of the questions I get a *lot* on the job is from users that have not heard 
 
 2. Create a new chocolatey project. From the powershell prompt, create a new chocolatey project by typing `choco new paprika`, or your app of choice. In the example I'm just hanging out in the Downloads directory, but if you are doing this for work I'd suggest creating a dedicated chocolatey code folder where you can store these projects and check them into version control.
 
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-00.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-00.jpg)
 
 3. Now that the project has been created, we have a lot of filling in the blanks to do. Let's start by opening our project in Visual Studio Code. In the example, from the powershell prompt type `code paprika` to load VS code and the project folder automatically.
 
 4. Since this is a quick and easy example, let's select and remove all the comments. Anything that starts with a `<!--` can go. Here's a before and after pic:
 
     **BEFORE**
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-02.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-02.jpg)
 
     **AFTER**
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-03.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-03.jpg)
 
 5. Now that we've cleaned it up, let's put the right information into the box.
     ```
@@ -69,7 +67,7 @@ One of the questions I get a *lot* on the job is from users that have not heard 
 
 6. The last bit it to get the installation logic into the package. We do this two ways. The first is to get the MSI install information. We do this by running the installer with the `/?` flag. This will display all the flags we will use inside the choco package to create a silent installer.
 
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-01.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-01.jpg)
 
     from this example, a nice `/quiet /qn` should suffice.
 
@@ -115,7 +113,7 @@ Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-ins
 
 13. Let's package it. From your PS prompt, enter the paprika project directory and run `choco pack`
 
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-04.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-04.jpg)
 
     if everything hit correctly, you should now have a `nupkg` file in the root of the project folder. This is the package.
 
@@ -123,11 +121,11 @@ Install-ChocolateyPackage @packageArgs # https://chocolatey.org/docs/helpers-ins
 
 15. Clicking on the Start Menu, I can now see my installed application.
 
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-05.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-05.jpg)
 
 16. Result! Now I can make waffles.
 
-    ![img](/img/2020-08-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-06.jpg)
+    ![img](/img/2020-09-27-a-quick-chocolatey-packaging-walkthrough/quick-choco-pkg-06.jpg)
 
 ## Wrap-Up
 
@@ -135,4 +133,6 @@ In retrospect, *quick* might not be the word I would use, but the first couple o
 
 One you get the hang of this, though, it's super quick. Combine custom templates and your own repository and creating a package is a pretty fast and easy process.
 
-When you evaluate the free and business versions of chocolatey, one of the big pros of the paid versions is that all the above steps can be solved by simply right-clicking the MSI and selecting `Create Chocolatey Package`. If that sort of thing is your bag, I highly suggest checking out the paid versions and all the additional features to make managing this stuff at scale a simpler process.
+When you [evaluate the free and business versions of chocolatey](https://chocolatey.org/compare), one of the big pros of the paid versions is that all the above steps can be solved by simply right-clicking the MSI and selecting `Create Chocolatey Package`. If that sort of thing is your bag, I highly suggest checking out the paid versions and all the additional features to make managing this stuff at scale a simpler process.
+
+Now, we still have work to do, such as storing this package in a repository and deploying the package across several systems. Well, maybe I don't need a recipe app on all my systems but you can see how beautiful this process would be with something like deploying Visual Studio Code or Zoom.
