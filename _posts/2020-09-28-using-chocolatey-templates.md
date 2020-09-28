@@ -115,5 +115,6 @@ Install-ChocolateyPackage @packageArgs
 
 This was an incredible basic walkthrough templating and there's just so much more you can do. However, I feel like I'd be wasting my breath as a lot of that has been covered in much more detail via a couple of doc links and blog posts. By all means, if templating is something important to you make sure to check out the following links for a) better docs on how to make and distribute templates and b) how Walmart is crushing it on simplfying the package creation process.
 
-[How to Create Custom Package Templates](https://chocolatey.org/docs/how-to-create-custom-package-templates)
-[Extending Chocolatey Packaging at Walmart](https://chocolatey.org/blog/extending-chocolatey-packaging-at-walmart)
+- [How to Create Custom Package Templates](https://chocolatey.org/docs/how-to-create-custom-package-templates)
+
+- [Extending Chocolatey Packaging at Walmart](https://chocolatey.org/blog/extending-chocolatey-packaging-at-walmart)
